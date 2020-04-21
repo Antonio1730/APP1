@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = adapterView.getItemAtPosition(i).toString();
                 Log.d(TAG, "onItemClick: You clicked on "+name);
 
-                Cursor data = mDatabasehelper.getitemID(name);
+                Cursor data = mDatabasehelper.getDecisionID(name);
                 int itemID = -1;
                 while(data.moveToNext()){
                     itemID = data.getInt(0);
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
          {
              Log.d(TAG, "populateListView: Displaying data in the ListView.");
 
-             Cursor data = mDatabasehelper.getData();
+             Cursor data = mDatabasehelper.getDecisions();
              ArrayList<String> listData = new ArrayList<>();
              while(data.moveToNext()){
                  listData.add(data.getString(1));

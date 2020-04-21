@@ -69,7 +69,7 @@ public class draw extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabasehelper.deleteitem(selectedID, selectedName);
+                mDatabasehelper.deleteDecision(selectedID, selectedName);
                 Intent deleteintent = new Intent(draw.this, MainActivity.class);
                 startActivity(deleteintent);
                 finish();

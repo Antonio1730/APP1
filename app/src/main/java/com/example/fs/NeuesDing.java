@@ -92,8 +92,8 @@ public class NeuesDing extends AppCompatActivity {
         finish();
     }
 
-    public void addDrawItem(String newEntry){
-        boolean insertData = mDatabaseHelper.addDrawItem(newEntry);
+    public void addDrawItem(String newDrawEntry){
+        boolean insertData = mDatabaseHelper.addDrawItem(newDrawEntry);
 
         if (insertData==true){
             toastMessage("Data successfully added");

@@ -17,10 +17,13 @@ public class Databasehelper extends SQLiteOpenHelper {
     private static final String TAG = "Databasehelper";
 
     private static final String TABLE_NAME = "Decisions";
+    private static final String DRAWITEMTABLENAME = "Items";
     private static final String Col1 = "Id";
     private static final String Col2 = "name";
-    private static final String Col3 = "rep";
-    private static final String Col4 = "data";
+    private static final String Col3 = "repeteyn";
+    private static final String Col11 = "drawitemid";
+    private static final String Col22 = "drawitem";
+    private static final String Col33 = "decisiontemid";
 
     public Databasehelper(Context context) {
         super(context, TABLE_NAME, null, 1);
@@ -28,9 +31,12 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = " CREATE TABLE " + TABLE_NAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        String createProjectTable = " CREATE TABLE " + TABLE_NAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Col2 + " TEXT," + Col3+ " TEXT)";
-        db.execSQL(createTable);
+        db.execSQL(createProjectTable);
+        String createDrawItemTable = "CREATE TABLE " + DRAWITEMTABLENAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Col22 + "TEXT," + Col33 + "TEXT)";
+        db.execSQL(createDrawItemTable);
     }
 
     @Override
@@ -88,6 +94,19 @@ public class Databasehelper extends SQLiteOpenHelper {
 
 
     }
+    public boolean addDrawItem(String item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col22, item);
 
+        Log.d(TAG, "addData: Adding " + item + "to" + TABLE_NAME);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 

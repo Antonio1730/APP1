@@ -41,11 +41,6 @@ public class NeuesDing extends AppCompatActivity {
 
 
 
-
-
-
-
-
         addProject.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -55,11 +50,28 @@ public class NeuesDing extends AppCompatActivity {
                     addNeuesDing(newEntry);
                     projectname.setText("");
                     }
-                else{ toastMessage("You need to fill in the text field");
+                else{ toastMessage("You need to set a name for your project");
                 }
             }
         });
+
+        adddrawitem.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String newDrawEntry = drawitem.getText().toString();
+                if (projectname.length() != 0){
+                    addDrawItem(newDrawEntry);
+                    projectname.setText("");
+                }
+                else{ toastMessage("You need to fill in the text field");
+                }
+
+
+            }
+        });
     }
+
 
 
     private void toastMessage(String message){
@@ -79,7 +91,17 @@ public class NeuesDing extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void newitem(){
 
+    public void addDrawItem(String newEntry){
+        boolean insertData = mDatabaseHelper.addDrawItem(newEntry);
+
+        if (insertData==true){
+            toastMessage("Data successfully added");
+        }else {
+            toastMessage("Something went wrong");
+        }
+
+        finish();
     }
+
 }

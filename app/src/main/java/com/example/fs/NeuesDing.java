@@ -1,6 +1,7 @@
 package com.example.fs;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,7 +10,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,7 +20,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class NeuesDing extends AppCompatActivity {
+    private static String TAG = "NeuesDing";
     Databasehelper mDatabaseHelper;
     Button addProject;
     EditText projectname;
@@ -38,7 +44,7 @@ public class NeuesDing extends AppCompatActivity {
         adddrawitem = findViewById(R.id.adddrawitem);
         drawitem    = findViewById(R.id.drawitem);
         drawlist    = findViewById(R.id.drawlist);
-
+        fillDrawItemList();
 
 
         addProject.setOnClickListener(new View.OnClickListener(){
@@ -60,9 +66,9 @@ public class NeuesDing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newDrawEntry = drawitem.getText().toString();
-                if (projectname.length() != 0){
+                if (drawitem.length() != 0){
                     addDrawItem(newDrawEntry);
-                    projectname.setText("");
+                    drawitem.setText("");
                 }
                 else{ toastMessage("You need to fill in the text field");
                 }
@@ -102,6 +108,19 @@ public class NeuesDing extends AppCompatActivity {
         }
 
         finish();
+    }
+    public void fillDrawItemList(){
+
+            Log.d(TAG, "populateListView: Displaying data in the ListView.");
+
+            Cursor data = mDatabaseHelper.getDrawItems();
+            ArrayList<String> listData = new ArrayList<>();
+            while(data.moveToNext()){
+                listData.add(data.getString(1));
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
+            drawlist.setAdapter(adapter);
+
     }
 
 }

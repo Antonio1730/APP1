@@ -19,7 +19,7 @@ public final class DataContract {
 
     public static class DrawItems implements BaseColumns {
         public static final String TABLE_NAME = "DrawItems";
-        public static final String ID_COLUMN = "Id";
+        public static final String DID_COLUMN = "Id";
         public static final String CONTENT_COLUMN = "drawitemname";
     }
 
@@ -30,7 +30,7 @@ public final class DataContract {
 
 
     public static final String createProjectTable = " CREATE TABLE " + Decisions.TABLE_NAME + "(" + Decisions._ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + Decisions.CONTENT_COLUMN + " TEXT)";
-    public static final String createItemTable = " CREATE TABLE " + DrawItems.TABLE_NAME + "(" + DrawItems._ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + DrawItems.CONTENT_COLUMN + " TEXT)";
+    public static final String createItemTable = " CREATE TABLE " + DrawItems.TABLE_NAME + "(" + DrawItems._ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + DrawItems.CONTENT_COLUMN + " TEXT," + DrawItems.DID_COLUMN + "TEXT)";
     public static final String createSupportTable = " CREATE TABLE " + Support.TABLE_NAME + "(" + Support._ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " + Support.ID_COLUMN + " TEXT)";
 
     public static final String deleteProjectTable = " DROP TABLE IF EXISTS" + Decisions.TABLE_NAME;

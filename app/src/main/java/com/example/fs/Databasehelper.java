@@ -16,20 +16,6 @@ import com.example.fs.data.LoginDataSource;
 
 public class Databasehelper extends SQLiteOpenHelper {
 
-    /** private static final String TABLE_NAME = "Decisions";
-    private static final String TAG = "Databasehelper";
-
-    private static final String TABLE_NAME = "Decisions";
-    private static final String DRAWITEMTABLENAME = "Items";
-    private static final String SUPPORT_TABLE= "Help";
-    private static final String Col1 = "Id";
-    private static final String Col2 = "name";
-    private static final String Col3 = "repeteyn";
-    private static final String Col11 = "drawitemid";
-    private static final String Col22 = "drawitem";
-    private static final String Col111 = "Id";
-    private static final String Col222 = "drawitemid";**/
-
     public static String DATABASE_NAME ="Resolverdb";
 
     public Databasehelper(Context context) {
@@ -39,12 +25,6 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /**String createProjectTable = " CREATE TABLE " + TABLE_NAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Col2 + " TEXT," + Col3+ " TEXT)";
-        String createDrawItemTable = "CREATE TABLE " + DRAWITEMTABLENAME + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Col22 + "TEXT)";
-        String createSupportTable = "CREATE TABLE " + SUPPORT_TABLE + "( ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Col222+ "TEXT)";**/
 
         db.execSQL(DataContract.createItemTable);
         db.execSQL(DataContract.createProjectTable);
@@ -83,6 +63,13 @@ public class Databasehelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getDrawItems() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
     public Cursor getDecisionID(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + DataContract.Decisions._ID + " FROM " + DataContract.Decisions.TABLE_NAME + " WHERE " + DataContract.Decisions.CONTENT_COLUMN + "= '" + name + "'";
@@ -93,29 +80,25 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     public void deleteDecision(int id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE  FROM " + TABLE_NAME + " WHERE " + Col1 + "= '" + id + "'"+" AND "+Col2+"='"+name+"'";
-        Cursor data = db.rawQuery(query, null);
-        Log.d(TAG, "deleteitem: query: "+query);
-        Log.d(TAG, "deleteitem: "+name);
-        db.execSQL(query);
+        String query1 = "DELETE  FROM " + DataContract.Decisions.TABLE_NAME + " WHERE " + DataContract.Decisions._ID + "= '" + id + "'"+" AND "+ DataContract.Decisions.CONTENT_COLUMN +"='"+name+"'";
+        String query2 = "DELETE  FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + id + "'";
+        Cursor data = db.rawQuery(query1, null);
+        Cursor data2 =db.rawQuery(query2,null);
+        Log.d(DataContract.TAG, "deleteitem: query: "+query1+","+query2);
+        Log.d(DataContract.TAG, "deleteitem: "+name);
+        db.execSQL(query1);
+        db.execSQL(query2);
 
     }
 
-    public Cursor edititem(String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE * FROM " + TABLE_NAME + " WHERE " + Col2 + "= '" + name + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
 
-
-    }
     public boolean addDrawItem(String item) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues2 = new ContentValues();
-        contentValues2.put(Col22, item);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataContract.DrawItems.CONTENT_COLUMN, item);
 
-        Log.d(TAG, "addData: Adding " + item + "to" + DRAWITEMTABLENAME);
-        long result = db.insert(DRAWITEMTABLENAME, null, contentValues2);
+        Log.d(DataContract.TAG, "addData: Adding " + item + "to" + DataContract.DrawItems.TABLE_NAME);
+        long result = db.insert(DataContract.DrawItems.TABLE_NAME, null, contentValues);
 
         if (result == -1) {
             return false;

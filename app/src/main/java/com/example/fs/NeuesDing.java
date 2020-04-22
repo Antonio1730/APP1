@@ -31,7 +31,6 @@ public class NeuesDing extends AppCompatActivity {
     TextView drawitem;
     ListView drawlist;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,7 @@ public class NeuesDing extends AppCompatActivity {
         adddrawitem = findViewById(R.id.adddrawitem);
         drawitem    = findViewById(R.id.drawitem);
         drawlist    = findViewById(R.id.drawlist);
-        fillDrawItemList();
+
 
 
         addProject.setOnClickListener(new View.OnClickListener(){
@@ -58,6 +57,8 @@ public class NeuesDing extends AppCompatActivity {
                     }
                 else{ toastMessage("You need to set a name for your project");
                 }
+
+
             }
         });
 
@@ -65,17 +66,23 @@ public class NeuesDing extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 String newDrawEntry = drawitem.getText().toString();
+                String DId = projectname.getText().toString();
+
+
                 if (drawitem.length() != 0){
-                    addDrawItem(newDrawEntry);
+                    addDrawItem(newDrawEntry, DId);
                     drawitem.setText("");
                 }
                 else{ toastMessage("You need to fill in the text field");
                 }
+                fillDrawItemList();
 
 
             }
         });
+
     }
 
 
@@ -98,8 +105,8 @@ public class NeuesDing extends AppCompatActivity {
         finish();
     }
 
-    public void addDrawItem(String newDrawEntry){
-        boolean insertData = mDatabaseHelper.addDrawItem(newDrawEntry);
+    public void addDrawItem(String newDrawEntry, String DId){
+        boolean insertData = mDatabaseHelper.addDrawItem(newDrawEntry, DId);
 
         if (insertData==true){
             toastMessage("Data successfully added");
@@ -107,13 +114,15 @@ public class NeuesDing extends AppCompatActivity {
             toastMessage("Something went wrong");
         }
 
-        finish();
-    }
-    public void fillDrawItemList(){
 
+    }
+
+
+    public void fillDrawItemList(){
+        String decision = projectname.getText().toString();
             Log.d(TAG, "populateListView: Displaying data in the ListView.");
 
-            Cursor data = mDatabaseHelper.getDrawItems();
+            Cursor data = mDatabaseHelper.getDrawItems(decision);
             ArrayList<String> listData = new ArrayList<>();
             while(data.moveToNext()){
                 listData.add(data.getString(1));

@@ -1,6 +1,7 @@
 package com.example.fs;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,7 +20,7 @@ public class draw extends AppCompatActivity {
 
     private static String TAG="MainActivity";
     Databasehelper mDatabasehelper;
-    TextView projectname;
+    TextView projectname, RandomItem;
     Button draw;
     ImageButton edit, delete;
     String selectedName;
@@ -36,6 +37,7 @@ public class draw extends AppCompatActivity {
         edit            = findViewById(R.id.editbutton);
         delete          = findViewById(R.id.deletebutton);
         draw            = findViewById(R.id.draw);
+        RandomItem      = findViewById(R.id.RandomItem);
 
 
             Intent receivedintent   = getIntent();
@@ -51,6 +53,9 @@ public class draw extends AppCompatActivity {
         draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                    Cursor data = mDatabasehelper.randomchoice();
+                    RandomItem.setText(data.getString(0));
 
             }
         });

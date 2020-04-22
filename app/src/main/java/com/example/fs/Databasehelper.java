@@ -19,7 +19,7 @@ public class Databasehelper extends SQLiteOpenHelper {
     public static String DATABASE_NAME ="Resolverdb";
 
     public Databasehelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 100);
 
     }
 
@@ -63,12 +63,12 @@ public class Databasehelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getDrawItems() {
+    public Cursor getDrawItems( String decision) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME;
+        String query = "SELECT " + DataContract.DrawItems.CONTENT_COLUMN+" FROM " + DataContract.DrawItems.TABLE_NAME +" WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + decision + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
-    }
+}
 
     public Cursor getDecisionID(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -91,8 +91,15 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     }
 
+    public Cursor randomchoice(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT "+ DataContract.DrawItems.CONTENT_COLUMN+ " FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE "+ DataContract.DrawItems.DID_COLUMN + "= 'Test' ORDER BY RANDOM()";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
 
-    public boolean addDrawItem(String item) {
+
+    public boolean addDrawItem(String  item, String did) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataContract.DrawItems.CONTENT_COLUMN, item);

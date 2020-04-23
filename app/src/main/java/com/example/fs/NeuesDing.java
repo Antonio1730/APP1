@@ -78,7 +78,7 @@ public class NeuesDing extends AppCompatActivity {
             toastMessage("Something went wrong");
         }
         Intent intent = new Intent(this, AddDrawItem.class);
-        intent.putExtra("projectname", projectname.getText());
+        intent.putExtra("projectname", projectname.getText().toString());
         startActivity(intent);
         finish();
     }

@@ -63,9 +63,9 @@ public class Databasehelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getDrawItems( String decision) {
+    public Cursor getDrawItems(String projectid) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + DataContract.DrawItems.CONTENT_COLUMN+" FROM " + DataContract.DrawItems.TABLE_NAME +" WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + decision + "'";
+        String query = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME +" WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + projectid + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
 }
@@ -99,12 +99,13 @@ public class Databasehelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addDrawItem(String  item, String did) {
+    public boolean addDrawItem(String  NewDrawEntry, String projectid) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DataContract.DrawItems.CONTENT_COLUMN, item);
+        contentValues.put(DataContract.DrawItems.CONTENT_COLUMN, NewDrawEntry);
+        contentValues.put(DataContract.DrawItems.DID_COLUMN, projectid);
 
-        Log.d(DataContract.TAG, "addData: Adding " + item + "to" + DataContract.DrawItems.TABLE_NAME);
+        Log.d(DataContract.TAG, "addData: Adding " + NewDrawEntry+ projectid + "to" + DataContract.DrawItems.TABLE_NAME);
         long result = db.insert(DataContract.DrawItems.TABLE_NAME, null, contentValues);
 
         if (result == -1) {
@@ -113,5 +114,8 @@ public class Databasehelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+
+
 }
 

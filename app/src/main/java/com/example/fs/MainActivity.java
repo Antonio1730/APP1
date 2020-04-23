@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static String TAG="MainActivity";
     ListView itemList;
     Databasehelper mDatabasehelper;
-    FloatingActionButton aib;
+    FloatingActionButton addItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         itemList = (ListView) findViewById(R.id.itemList);
         mDatabasehelper = new Databasehelper(this);
-        aib = findViewById(R.id.addItem);
+        addItem = findViewById(R.id.addItem);
 
         fillList();
 
-        aib.setOnClickListener(new View.OnClickListener() {
+        addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openNeuesDing();

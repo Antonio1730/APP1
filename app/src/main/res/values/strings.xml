@@ -13,4 +13,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_draw">draw</string>
     <string name="title_activity_edit">Edit</string>
+    <string name="title_activity_add_draw_item">AddDrawItem</string>
 </resources>

@@ -91,9 +91,9 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor randomchoice() {
+    public Cursor randomchoice(String projectname) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.DID_COLUMN + "= 'Test' ORDER BY RANDOM() LIMIT 2";
+        String query = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + projectname + "'";
         Cursor data = db.rawQuery(query, null);
         return data;
     }

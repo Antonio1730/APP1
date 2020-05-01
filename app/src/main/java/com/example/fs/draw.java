@@ -58,9 +58,7 @@ public class draw extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Cursor data = mDatabasehelper.randomchoice();
-                RandomItem.setText(data.getString(1));
-
+                getrandom();
 
             }
         });
@@ -87,6 +85,18 @@ public class draw extends AppCompatActivity {
 
 
         });
+    }
+
+    public void getrandom(){
+
+        Cursor data = mDatabasehelper.randomchoice(selectedName);
+        int count = data.getCount();
+        double generate = Math.random();
+        double randomnumber = generate * count + 1;
+        int randomInt = (int) randomnumber;
+        data.moveToPosition((randomInt-1));
+        RandomItem.setText(data.getString(1));
+
     }
 
 }

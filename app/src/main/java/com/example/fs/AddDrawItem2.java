@@ -30,7 +30,6 @@ public class AddDrawItem2 extends AppCompatActivity {
     String projectname, newDrawItem;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,43 +40,51 @@ public class AddDrawItem2 extends AppCompatActivity {
         addDrawItem=findViewById(R.id.addDrawItem);
         mDatabaseHelper = new Databasehelper(this);
 
+        Intent receivedintent = getIntent();
+        projectname = receivedintent.getStringExtra("projectname");
+        Log.d(TAG, "projectname after receivedintent ="+ projectname);
+
+
 
         addDrawItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newDrawItem = drawitem.getText().toString();
 
-                Intent receivedintent = getIntent();
-                projectname = receivedintent.getStringExtra("projectname");
-                Log.d(TAG, "projectname after receivedintent ="+projectname);
 
+               /** Intent receivedintent = getIntent();
+                projectname = receivedintent.getStringExtra("projectname");
+                Log.d(TAG, "projectname after receivedintent ="+projectname);**/
 
 
                 if (drawitem.length() != 0 )  {
-
-                    if (projectname.length() !=0){
 
                     addDrawItem(newDrawItem, projectname);
                     BacktoListIntent();
 
                     drawitem.setText("");
 
-                }} else {
+                } else {
                     toastMessage("You need to set a name for your project");
                 }
-
-
-
 
             }
         });
 
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("PROJECT", projectname);
+
+        super.onSaveInstanceState(outState);
+    }
+
+
     public void BacktoListIntent(){
         Intent intent = new Intent(this, AddDrawItem.class);
         intent.putExtra("projectname", projectname);
         startActivity(intent);
-        finish();
+
     }
     public void addDrawItem(String newDrawItem, String projectname) {
         boolean insertData = mDatabaseHelper.addDrawItem(newDrawItem, projectname);
@@ -94,6 +101,5 @@ public class AddDrawItem2 extends AppCompatActivity {
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
 }
+

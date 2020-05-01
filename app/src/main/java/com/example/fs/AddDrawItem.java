@@ -41,7 +41,6 @@ public class AddDrawItem extends AppCompatActivity {
         mDatabaseHelper = new Databasehelper(this);
         backtomain = findViewById(R.id.backtomain);
         drawlist = findViewById(R.id.drawlist);
-        refreshtest = findViewById(R.id.refreshtest);
 
         Intent receivedfromAddDrawItem2 = getIntent();
         projectname = receivedfromAddDrawItem2.getStringExtra("projectname");

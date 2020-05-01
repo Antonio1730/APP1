@@ -5,22 +5,17 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class NeuesDing extends AppCompatActivity {
     private static String TAG = "NeuesDing";
@@ -30,6 +25,7 @@ public class NeuesDing extends AppCompatActivity {
     FloatingActionButton adddrawitem;
     TextView drawitem;
     ListView drawlist;
+    String  newEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +45,15 @@ public class NeuesDing extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String newEntry = projectname.getText().toString();
+               newEntry = projectname.getText().toString();
+
+
                 if (projectname.length() != 0) {
+                   if (getCount()==0){
                     addNeuesDing(newEntry);
                     projectname.setText("");
-                } else {
+                } else {toastMessage("Decision already exists, please enter a different name");}
+                }else {
                     toastMessage("You need to set a name for your project");
                 }
 
@@ -77,12 +77,16 @@ public class NeuesDing extends AppCompatActivity {
         } else {
             toastMessage("Something went wrong");
         }
-        Intent intent = new Intent(this, AddDrawItem.class);
+        Intent intent = new Intent(getApplicationContext(), AddDrawItem2.class);
         intent.putExtra("projectname", projectname.getText().toString());
         startActivity(intent);
         finish();
     }
-
-}
+    public int getCount(){
+        Cursor unique = mDatabaseHelper.checkunique(newEntry);
+        int count = unique.getCount();
+        Log.d(TAG,"Count:"+count);
+        return count;
+}}
 
 

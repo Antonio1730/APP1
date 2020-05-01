@@ -27,9 +27,8 @@ public class AddDrawItem extends AppCompatActivity {
     private static String TAG = "AddDrawItem";
     FloatingActionButton adddrawitem;
     Databasehelper mDatabaseHelper;
-    Button backtomain;
-    TextView drawitem;
-    ListView drawlist;
+    Button backtomain, refreshtest;
+    static ListView drawlist;
     String projectname;
 
     @Override
@@ -38,69 +37,45 @@ public class AddDrawItem extends AppCompatActivity {
         setContentView(R.layout.activity_add_draw_item);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         adddrawitem = findViewById(R.id.adddrawitem);
         mDatabaseHelper = new Databasehelper(this);
         backtomain = findViewById(R.id.backtomain);
-        drawitem = findViewById(R.id.drawitem);
         drawlist = findViewById(R.id.drawlist);
+        refreshtest = findViewById(R.id.refreshtest);
 
-        Intent projectnameintent = getIntent();
-        projectname = projectnameintent.getStringExtra("projectname");
+        Intent receivedfromAddDrawItem2 = getIntent();
+        projectname = receivedfromAddDrawItem2.getStringExtra("projectname");
 
-
+        fillDrawItemList();
         adddrawitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String newDrawEntry = drawitem.getText().toString();
-
-
-                if (drawitem.length() != 0) {
-                    addDrawItem(newDrawEntry, projectname);
-                    drawitem.setText("");
-                } else {
-                    toastMessage("You need to fill in the text field");
-                }
-                fillDrawItemList();
-
-
+                toAddDrawItem2();
             }
         });
-
         backtomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 BacktoMain();
             }
         });
 
-
     }
-
-
     public void BacktoMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void addDrawItem(String newDrawEntry, String projectname) {
-        boolean insertData = mDatabaseHelper.addDrawItem(newDrawEntry, projectname);
-
-        if (insertData == true) {
-            toastMessage("Data successfully added");
-        } else {
-            toastMessage("Something went wrong");
-        }
-
+    public void toAddDrawItem2(){
+        Intent intent = new Intent(this, AddDrawItem2.class);
+        startActivity(intent);
+        finish();
 
     }
-
     public void fillDrawItemList() {
 
-        Log.d(TAG, "populateListView: Displaying data in the ListView.");
+        Log.d(TAG, "populateListView: Displaying data in the ListView."+ projectname);
 
         Cursor data = mDatabaseHelper.getDrawItems(projectname);
         ArrayList<String> listData = new ArrayList<>();
@@ -111,8 +86,6 @@ public class AddDrawItem extends AppCompatActivity {
         drawlist.setAdapter(adapter);
 
     }
-
-
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

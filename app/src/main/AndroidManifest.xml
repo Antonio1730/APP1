@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddDrawItem2"
+            android:label="@string/title_activity_add_draw_item2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".AddDrawItem"
             android:label="@string/title_activity_add_draw_item"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Edit"
             android:label="@string/title_activity_edit"

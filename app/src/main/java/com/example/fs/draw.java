@@ -12,19 +12,23 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class draw extends AppCompatActivity {
 
-    private static String TAG="MainActivity";
+    private static String TAG = "MainActivity";
     Databasehelper mDatabasehelper;
     TextView projectname, RandomItem;
     Button draw;
     ImageButton edit, delete;
     String selectedName;
     int selectedID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,30 +36,31 @@ public class draw extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        projectname     = findViewById(R.id.projectname);
+        projectname = findViewById(R.id.projectname);
         mDatabasehelper = new Databasehelper(this);
-        edit            = findViewById(R.id.editbutton);
-        delete          = findViewById(R.id.deletebutton);
-        draw            = findViewById(R.id.draw);
-        RandomItem      = findViewById(R.id.RandomItem);
+        edit = findViewById(R.id.editbutton);
+        delete = findViewById(R.id.deletebutton);
+        draw = findViewById(R.id.draw);
+        RandomItem = findViewById(R.id.RandomItem);
 
 
-            Intent receivedintent   = getIntent();
+        Intent receivedintent = getIntent();
 
-                selectedName        = receivedintent.getStringExtra("name");
-                selectedID          = receivedintent.getIntExtra("id",-1);
-                projectname.setText(selectedName);
+        selectedName = receivedintent.getStringExtra("name");
+        selectedID = receivedintent.getIntExtra("id", -1);
+        projectname.setText(selectedName);
 
 
-        Log.d(TAG, "onCreate: "+selectedName);
+        Log.d(TAG, "onCreate: " + selectedName);
 
 
         draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    Cursor data = mDatabasehelper.randomchoice();
-                    RandomItem.setText(data.getString(0));
+                Cursor data = mDatabasehelper.randomchoice();
+                RandomItem.setText(data.getString(1));
+
 
             }
         });
@@ -63,7 +68,7 @@ public class draw extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               Intent editintent = new Intent(draw.this, Edit.class);
+                Intent editintent = new Intent(draw.this, Edit.class);
                 editintent.putExtra("name", selectedName);
                 editintent.putExtra("id", selectedID);
                 startActivity(editintent);
@@ -83,11 +88,6 @@ public class draw extends AppCompatActivity {
 
         });
     }
-    private void toastMessage(String message) {
-    }
-    public void edititem(){
 
-
-    }
 }
 

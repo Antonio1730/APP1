@@ -8,19 +8,6 @@
     tools:context=".AddDrawItem"
     tools:showIn="@layout/activity_add_draw_item">
 
-    <EditText
-        android:id="@+id/drawitem"
-        android:layout_width="133dp"
-        android:layout_height="55dp"
-        android:clickable="true"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304" />
-
     <Button
         android:id="@+id/backtomain"
         android:layout_width="248dp"
@@ -28,10 +15,10 @@
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.462" />
+        app:layout_constraintVertical_bias="0.415" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/adddrawitem"
@@ -40,20 +27,32 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="0.907"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305"
+        app:layout_constraintVertical_bias="0.915"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <ListView
         android:id="@+id/drawlist"
-        android:layout_width="251dp"
-        android:layout_height="83dp"
+        android:layout_width="246dp"
+        android:layout_height="162dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.096" />
+
+    <Button
+        android:id="@+id/refreshtest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.572" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

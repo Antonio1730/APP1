@@ -1,6 +1,8 @@
 package com.example.fs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -18,16 +20,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+
+
+import static android.app.PendingIntent.getActivity;
 
 
 public class AddDrawItem2 extends AppCompatActivity {
 
     private static String TAG = "AddDrawItem2";
-    EditText drawitem;
+    EditText drawitem, factor;
     Button addDrawItem;
     Databasehelper mDatabaseHelper;
-    String projectname, newDrawItem;
+    String projectname, newDrawItem, filler;
+    int i, factorvalue;
 
 
     @Override
@@ -39,10 +44,20 @@ public class AddDrawItem2 extends AppCompatActivity {
         drawitem = findViewById(R.id.drawitem);
         addDrawItem=findViewById(R.id.addDrawItem);
         mDatabaseHelper = new Databasehelper(this);
+        factor = findViewById(R.id.factor);
 
-        Intent receivedintent = getIntent();
-        projectname = receivedintent.getStringExtra("projectname");
-        Log.d(TAG, "projectname after receivedintent ="+ projectname);
+        SharedPreferences sp = getSharedPreferences("saveIntentExtra", MODE_PRIVATE);
+        filler = getIntent().getStringExtra("projectname");
+        if (filler!= null) {
+
+            projectname = filler;
+            Log.d(TAG, "projectname after receivedintent =" + projectname);
+            sp.edit().putString("Extra", projectname).apply();
+
+        }
+        else{
+            projectname = getSharedPreferences("saveIntentExtra", MODE_PRIVATE).getString("Extra","ohneee");
+        }
 
 
 
@@ -56,10 +71,16 @@ public class AddDrawItem2 extends AppCompatActivity {
                 projectname = receivedintent.getStringExtra("projectname");
                 Log.d(TAG, "projectname after receivedintent ="+projectname);**/
 
+                String value = factor.getText().toString();
+                factorvalue = Integer.parseInt(value);
 
                 if (drawitem.length() != 0 )  {
 
-                    addDrawItem(newDrawItem, projectname);
+
+                    for ( i = 0; i<factorvalue; i++)
+                        {
+                            addDrawItem(newDrawItem, projectname);
+                        }
                     BacktoListIntent();
 
                     drawitem.setText("");
@@ -73,10 +94,9 @@ public class AddDrawItem2 extends AppCompatActivity {
 
     }
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString("PROJECT", projectname);
-
-        super.onSaveInstanceState(outState);
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("projectname",projectname);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 

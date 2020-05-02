@@ -77,6 +77,7 @@ public class AddDrawItem extends AppCompatActivity {
         Log.d(TAG, "populateListView: Displaying data in the ListView."+ projectname);
 
         Cursor data = mDatabaseHelper.getDrawItems(projectname);
+
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
             listData.add(data.getString(1));

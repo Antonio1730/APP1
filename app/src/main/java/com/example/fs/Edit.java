@@ -24,7 +24,7 @@ public class Edit extends AppCompatActivity {
     Databasehelper mDatabaseHelper;
     Button addEditedProject;
     EditText projectname;
-    String  editedEntry, oldprojectname;
+    String  newprojectname, oldprojectname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,11 @@ public class Edit extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                editedEntry = projectname.getText().toString();
+                newprojectname = projectname.getText().toString();
 
                 if (projectname.length() != 0) {
                     if (getCount()==0){
-                        editDing(editedEntry, id, oldprojectname);
+                        editDing(newprojectname, id, oldprojectname);
                         projectname.setText("");
                     } else {toastMessage("Decision already exists, please enter a different name");}
                 }else {
@@ -62,38 +62,40 @@ public class Edit extends AppCompatActivity {
         });
 
     }
-
-
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
-    public void editDing(String editedEntry, Integer id, String oldprojectname) {
-        boolean editData2 = mDatabaseHelper.editProjectnameforDrawItems(editedEntry, oldprojectname);
-        boolean editData = mDatabaseHelper.editdata(editedEntry, id);
+    public void editDing(String newprojectname, Integer id, String oldprojectname) {
+        Cursor data = mDatabaseHelper.geteditableDrawItems(oldprojectname);
+
+        while (data.moveToNext()){
+            int drawentryID = data.getInt(0);
+            boolean editData2 = mDatabaseHelper.editProjectnameforDrawItems(newprojectname, drawentryID);
+            if(editData2==true){
+                Log.d(TAG,"everythings fine, just updated at drawitem"+drawentryID);
+            }
+        }
+
+        boolean editData = mDatabaseHelper.editdata(newprojectname, id);
 
         if (editData==true )  {
-            if(editData2==true) {
-
                 toastMessage(("Editing successful"));
-
-            } else {
-                toastMessage("Drawlistproblem");
-            }
         } else {
             toastMessage("Problem");
         }
 
-        Intent intent = new Intent(getApplicationContext(), AddDrawItem.class);
+        Intent intent = new Intent(getApplicationContext(), Edit2.class);
         intent.putExtra("projectname", projectname.getText().toString());
         startActivity(intent);
         finish();
     }
     public int getCount(){
-        Cursor unique = mDatabaseHelper.checkunique(editedEntry);
+        Cursor unique = mDatabaseHelper.checkunique(newprojectname);
         int count = unique.getCount();
         Log.d(TAG,"Count:"+count);
         return count;
     }
+
 }

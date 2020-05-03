@@ -5,6 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -67,8 +72,6 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
         projectname.setText(selectedName);
 
 
-
-
         SharedPreferences sp = getSharedPreferences("saveSwitchstate", MODE_PRIVATE);
         rep.setChecked(sp.getBoolean("value", true));
 
@@ -97,11 +100,18 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
 
-
         draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                ColorDrawable[] color = {new ColorDrawable(Color.argb(250,109, 70,107)), new ColorDrawable(Color.WHITE)};
+                TransitionDrawable trans = new TransitionDrawable(color);
+                GradientDrawable shape = new GradientDrawable();
+                shape.setShape(GradientDrawable.RECTANGLE);
+                shape.setCornerRadius(40.0f);
+                RandomItem.setBackground(shape);
+                /**RandomItem.setBackground(trans);
+                trans.startTransition(2000);**/
 
                 if (rep.isChecked() == false)
                 {
@@ -118,6 +128,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
                     {
 
                         RandomItem.setText(generatedItem);
+                        RandomItem.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
                         listData.add(Integer.toString(hiddenid));
                         history.setAdapter(adapter);
                         Log.d(TAG, "added id "+hiddenid);
@@ -159,7 +170,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                snacky(view);
+                snackydelete(view);
             }
 
 
@@ -189,6 +200,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
         data.moveToPosition((randomInt-1));
         hiddenid = data.getInt(0);
         RandomItem.setText(data.getString(1));
+        RandomItem.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
         Log.d(TAG,"getrandommessage activated");
 
     }
@@ -207,13 +219,15 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
 
     }
-    public void snacky(View view){
+    public void snackydelete(View view){
         Snackbar areusure = Snackbar.make(view, "are you sure?",Snackbar.LENGTH_INDEFINITE);
         areusure.setDuration(1000);
         areusure.setAction("Delete", this);
 
         areusure.show();
     }
+
+
 
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

@@ -129,14 +129,19 @@ public class Databasehelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean editProjectnameforDrawItems(String item, String olditem) {
+    public Cursor geteditableDrawItems(String oldname){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = " SELECT * FROM "+DataContract.DrawItems.TABLE_NAME+" WHERE "+DataContract.DrawItems.DID_COLUMN+" ='"+oldname+"'";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+    public boolean editProjectnameforDrawItems(String newname, Integer drawItemID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DataContract.DrawItems.DID_COLUMN, item);
-        contentValues.put(DataContract.DrawItems.DID_COLUMN, item);
+        contentValues.put(DataContract.DrawItems.DID_COLUMN, newname);
 
-        Log.d(DataContract.TAG, "addData: Adding " + item + "to" + DataContract.DrawItems.TABLE_NAME);
-        long result = db.update(DataContract.DrawItems.TABLE_NAME, contentValues, "DID_COLUMN = '"+olditem+"'",null);
+        Log.d(DataContract.TAG, "addData: Adding " + newname + "to" + DataContract.DrawItems.TABLE_NAME);
+        long result = db.update(DataContract.DrawItems.TABLE_NAME, contentValues, "_ID = '"+drawItemID+"'",null);
 
         if (result == -1) {
             return false;
@@ -147,6 +152,12 @@ public class Databasehelper extends SQLiteOpenHelper {
     public Cursor checkunique(String newDecision){
         SQLiteDatabase db = this.getWritableDatabase();
         String Uquery = "SELECT * FROM " + DataContract.Decisions.TABLE_NAME + " WHERE " + DataContract.Decisions.CONTENT_COLUMN + "= '" + newDecision + "'";
+        Cursor data = db.rawQuery(Uquery, null);
+        return data;
+    }
+    public Cursor getFactor(String oldDrawitems){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Uquery = "SELECT * FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.CONTENT_COLUMN + "= '" + oldDrawitems + "'";
         Cursor data = db.rawQuery(Uquery, null);
         return data;
     }

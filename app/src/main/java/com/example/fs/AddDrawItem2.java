@@ -66,25 +66,23 @@ public class AddDrawItem2 extends AppCompatActivity {
             public void onClick(View v) {
                 newDrawItem = drawitem.getText().toString();
 
-
-               /** Intent receivedintent = getIntent();
-                projectname = receivedintent.getStringExtra("projectname");
-                Log.d(TAG, "projectname after receivedintent ="+projectname);**/
-
                 String value = factor.getText().toString();
-                factorvalue = Integer.parseInt(value);
+
 
                 if (drawitem.length() != 0 )  {
+                    if(checkifnumeric(value)==true) {
 
 
-                    for ( i = 0; i<factorvalue; i++)
-                        {
+                        for (i = 0; i < factorvalue; i++) {
                             addDrawItem(newDrawItem, projectname);
                         }
-                    BacktoListIntent();
+                        BacktoListIntent();
 
-                    drawitem.setText("");
+                        drawitem.setText("");
 
+                    } else {
+                        toastMessage("Your factor needs to be numeric");
+                    }
                 } else {
                     toastMessage("You need to set a name for your project");
                 }
@@ -93,11 +91,7 @@ public class AddDrawItem2 extends AppCompatActivity {
         });
 
     }
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString("projectname",projectname);
-        super.onSaveInstanceState(savedInstanceState);
-    }
+
 
 
     public void BacktoListIntent(){
@@ -106,6 +100,16 @@ public class AddDrawItem2 extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+   public boolean checkifnumeric(String value){
+       try {
+           factorvalue = Integer.parseInt(value);
+       } catch (NumberFormatException nfe) {
+           return false;
+       }
+       return true;
+   }
+
     public void addDrawItem(String newDrawItem, String projectname) {
         boolean insertData = mDatabaseHelper.addDrawItem(newDrawItem, projectname);
 
@@ -118,6 +122,7 @@ public class AddDrawItem2 extends AppCompatActivity {
         }
 
     }
+
     private void toastMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

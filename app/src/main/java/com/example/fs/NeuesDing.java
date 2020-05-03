@@ -22,9 +22,6 @@ public class NeuesDing extends AppCompatActivity {
     Databasehelper mDatabaseHelper;
     Button addProject;
     EditText projectname;
-    FloatingActionButton adddrawitem;
-    TextView drawitem;
-    ListView drawlist;
     String  newEntry;
 
     @Override
@@ -36,9 +33,7 @@ public class NeuesDing extends AppCompatActivity {
         mDatabaseHelper = new Databasehelper(this);
         projectname = findViewById(R.id.projectname);
         addProject = findViewById(R.id.addProject);
-        adddrawitem = findViewById(R.id.adddrawitem);
-        drawitem = findViewById(R.id.drawitem);
-        drawlist = findViewById(R.id.drawlist);
+
 
 
         addProject.setOnClickListener(new View.OnClickListener() {

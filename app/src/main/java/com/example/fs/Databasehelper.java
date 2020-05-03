@@ -19,7 +19,7 @@ public class Databasehelper extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "Resolverdb";
 
     public Databasehelper(Context context) {
-        super(context, DATABASE_NAME, null, 101);
+        super(context, DATABASE_NAME, null, 130);
 
     }
 
@@ -48,6 +48,20 @@ public class Databasehelper extends SQLiteOpenHelper {
 
         Log.d(DataContract.TAG, "addData: Adding " + item + "to" + DataContract.Decisions.TABLE_NAME);
         long result = db.insert(DataContract.Decisions.TABLE_NAME, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean editdata(String item, Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataContract.Decisions.CONTENT_COLUMN, item);
+
+        Log.d(DataContract.TAG, "addData: Updating " + item + "at" + DataContract.Decisions.TABLE_NAME);
+        long result = db.update(DataContract.Decisions.TABLE_NAME, contentValues, "_ID ="+id,null);
 
         if (result == -1) {
             return false;
@@ -114,11 +128,36 @@ public class Databasehelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean editProjectnameforDrawItems(String item, String olditem) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataContract.DrawItems.DID_COLUMN, item);
+        contentValues.put(DataContract.DrawItems.DID_COLUMN, item);
+
+        Log.d(DataContract.TAG, "addData: Adding " + item + "to" + DataContract.DrawItems.TABLE_NAME);
+        long result = db.update(DataContract.DrawItems.TABLE_NAME, contentValues, "DID_COLUMN = '"+olditem+"'",null);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public Cursor checkunique(String newDecision){
         SQLiteDatabase db = this.getWritableDatabase();
         String Uquery = "SELECT * FROM " + DataContract.Decisions.TABLE_NAME + " WHERE " + DataContract.Decisions.CONTENT_COLUMN + "= '" + newDecision + "'";
         Cursor data = db.rawQuery(Uquery, null);
         return data;
+    }
+    public void deleteDrawItems( String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE  FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.DID_COLUMN + "= '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        Log.d(DataContract.TAG, "deleteitem: query: " + query );
+        Log.d(DataContract.TAG, "deleteitem: " + name);
+        db.execSQL(query);
+
     }
 
 

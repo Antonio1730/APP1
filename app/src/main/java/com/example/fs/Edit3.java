@@ -73,10 +73,9 @@ public class Edit3 extends AppCompatActivity {
     }
 
     public void BacktoListIntent(){
-        Intent intent = new Intent(this, AddDrawItem.class);
-        intent.putExtra("projectname", projectname);
+        Intent intent = new Intent(this, Edit2.class);
         startActivity(intent);
-
+        finish();
     }
 
     public boolean checkifnumeric(String value){

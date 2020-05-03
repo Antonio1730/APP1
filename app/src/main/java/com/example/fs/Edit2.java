@@ -54,10 +54,11 @@ public class Edit2 extends AppCompatActivity {
         }
 
         fillDrawItemList();
+
         adddrawitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toAddDrawItem2();
+                toEdit3();
             }
         });
         backtomain.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +94,9 @@ public class Edit2 extends AppCompatActivity {
         finish();
     }
 
-    public void toAddDrawItem2(){
-        Intent intent = new Intent(this, AddDrawItem2.class);
+    public void toEdit3(){
+        Intent intent = new Intent(this, Edit3.class);
+        intent.putExtra("newprojectname", projectname);
         startActivity(intent);
         finish();
 

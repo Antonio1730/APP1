@@ -38,7 +38,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = "MainActivity";
     Databasehelper mDatabasehelper;
-    TextView projectname, RandomItem;
+    TextView projectname, RandomItem, howmanyleft;
     Button draw ;
     ImageButton edit, delete;
     String selectedName, generatedItem;
@@ -65,6 +65,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
         view =findViewById(R.id.Activity_draw);
         history =findViewById(R.id.history);
         history.setVisibility(View.GONE);
+        howmanyleft = findViewById(R.id.howmanyleft);
 
         Intent receivedintent = getIntent();
         selectedName = receivedintent.getStringExtra("name");
@@ -116,6 +117,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
                 if (rep.isChecked() == false)
                 {
                     getrandom();
+                    howmanyleft.setText("");
 
                 }
                 else {
@@ -126,26 +128,28 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
                     if(listData.contains(Integer.toString(hiddenid))==false)
                     {
-
+                        int howmany = ((count) - history.getCount());
                         RandomItem.setText(generatedItem);
                         RandomItem.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
                         listData.add(Integer.toString(hiddenid));
                         history.setAdapter(adapter);
+                        howmanyleft.setText(Integer.toString(howmany));
                         Log.d(TAG, "added id "+hiddenid);
                     }
                     else{
-                        int howmany = ((count-1) - history.getCount());
+                        int howmany = ((count) - history.getCount());
                         getrandomwhiledeleting();
                         RandomItem.setText("try again");
-                        if(howmany>1) {
-                            toastMessage("there are " + howmany + " items remaining");
+                        howmanyleft.setText(Integer.toString(howmany));
+                       /** if(howmany>1) {
+                            howmanyleft.setText(howmany);
                         }
                         else if (howmany==1){
-                            toastMessage("there is " + howmany + " item remaining");
+                            howmanyleft.setText(howmany);
                         }
                          else {
                             toastMessage("there are no items remaining");
-                        }
+                        }**/
                     }
 
                 }

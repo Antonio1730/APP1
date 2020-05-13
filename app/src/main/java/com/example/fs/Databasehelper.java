@@ -170,7 +170,14 @@ public class Databasehelper extends SQLiteOpenHelper {
         db.execSQL(query);
 
     }
+    public void deleteSpecificDrawItem( String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE  FROM " + DataContract.DrawItems.TABLE_NAME + " WHERE " + DataContract.DrawItems.CONTENT_COLUMN + "= '" + name + "'";
+        Cursor data = db.rawQuery(query, null);
+        Log.d(DataContract.TAG, "deletespecificitem: query: " + query);
+        Log.d(DataContract.TAG, "deletespecificitem: " + name);
+        db.execSQL(query);
 
-
+    }
 }
 

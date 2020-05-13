@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -40,7 +42,6 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
     Databasehelper mDatabasehelper;
     TextView projectname, RandomItem, howmanyleft;
     Button draw ;
-    ImageButton edit, delete;
     String selectedName, generatedItem;
     Switch rep;
     int selectedID, hiddenid;
@@ -57,12 +58,10 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
         projectname = findViewById(R.id.projectname);
         mDatabasehelper = new Databasehelper(this);
-        edit = findViewById(R.id.editbutton);
-        delete = findViewById(R.id.deletebutton);
         draw = findViewById(R.id.draw);
         RandomItem = findViewById(R.id.RandomItem);
         rep = findViewById(R.id.rep);
-        view =findViewById(R.id.Activity_draw);
+        view =findViewById(R.id.activity_draw);
         history =findViewById(R.id.history);
         history.setVisibility(View.GONE);
         howmanyleft = findViewById(R.id.howmanyleft);
@@ -158,27 +157,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
 
         });
 
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent editintent = new Intent(draw.this, Edit.class);
-                editintent.putExtra("name", selectedName);
-                editintent.putExtra("id", selectedID);
-                startActivity(editintent);
-                finish();
-
-            }
-        });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                snackydelete(view);
-            }
-
-
-        });
 
     }
 
@@ -226,7 +205,7 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
     public void snackydelete(View view){
         Snackbar areusure = Snackbar.make(view, "are you sure?",Snackbar.LENGTH_INDEFINITE);
         areusure.setDuration(1000);
-        areusure.setAction("Delete", this);
+        areusure.setAction("Delete", draw.this);
 
         areusure.show();
     }
@@ -237,6 +216,33 @@ public class draw extends AppCompatActivity implements View.OnClickListener {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        if (id == R.id.deletebutton) {
+            snackydelete(view);
+        }
+        else if (id == R.id.editbutton){
+            Intent editintent = new Intent(draw.this, Edit.class);
+            editintent.putExtra("name", selectedName);
+            editintent.putExtra("id", selectedID);
+            startActivity(editintent);
+            finish();
+        }
+       return super.onOptionsItemSelected(item);
+    }
 
 }
 

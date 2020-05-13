@@ -49,10 +49,11 @@ public class Edit extends AppCompatActivity {
                 newprojectname = projectname.getText().toString();
 
                 if (projectname.length() != 0) {
-                    if (getCount()==0){
+                    editDing(newprojectname, id, oldprojectname);
+                    /**if (getCount()==0){
                         editDing(newprojectname, id, oldprojectname);
                         projectname.setText("");
-                    } else {toastMessage("Decision already exists, please enter a different name");}
+                    } else {toastMessage("Decision already exists, please enter a different name");}**/
                 }else {
                     toastMessage("You need to set a name for your project");
                 }

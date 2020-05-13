@@ -37,6 +37,8 @@
         android:id="@+id/drawlist"
         android:layout_width="248dp"
         android:layout_height="333dp"
+        android:choiceMode="singleChoice"
+        android:listSelector="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"

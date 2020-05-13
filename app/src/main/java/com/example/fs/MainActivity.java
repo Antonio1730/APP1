@@ -49,36 +49,32 @@ public class MainActivity extends AppCompatActivity {
         });
         itemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView,View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = adapterView.getItemAtPosition(i).toString();
-                Log.d(TAG, "onItemClick: You clicked on "+name);
+                Log.d(TAG, "onItemClick: You clicked on " + name);
 
                 Cursor data = mDatabasehelper.getDecisionID(name);
                 int itemID = -1;
-                while(data.moveToNext()){
+                while (data.moveToNext()) {
                     itemID = data.getInt(0);
 
                 }
-                if(itemID>-1)
-                {
-                    Log.d(TAG, "onItemClick: The ID is: "+itemID);
+                if (itemID > -1) {
+                    Log.d(TAG, "onItemClick: The ID is: " + itemID);
                     Intent choiceintent = new Intent(MainActivity.this, draw.class);
-                    choiceintent.putExtra("id",itemID);
-                    choiceintent.putExtra("name",name);
+                    choiceintent.putExtra("id", itemID);
+                    choiceintent.putExtra("name", name);
 
                     startActivity(choiceintent);
-                }
-                else {
+                } else {
                     toastMessage("No ID with that name");
                 }
             }
 
         });
 
-
-
-
     }
+
         private void toastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
@@ -104,30 +100,4 @@ public class MainActivity extends AppCompatActivity {
              itemList.setAdapter(adapter);
          }
 
-
-
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

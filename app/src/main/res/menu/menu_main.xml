@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.fs.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="delete"
-        app:showAsAction="never" />
+        android:id="@+id/deletebutton"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_delete"
+        />
+    <item
+        android:id="@+id/editbutton"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_edit"
+        />
 </menu>

@@ -17,4 +17,5 @@
     <string name="title_activity_add_draw_item2">AddDrawItem2</string>
     <string name="title_activity_edit2">Edit2</string>
     <string name="title_activity_edit3">Edit3</string>
+    <string name="save">SAVE</string>
 </resources>
